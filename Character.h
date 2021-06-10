@@ -16,7 +16,7 @@ public:
     virtual void reload() = 0;
     virtual void attack(Character& opponent) const = 0;
     
-    std::ostream& operator<<(std::ostream& stream, const Character character);
+    friend std::ostream& operator<<(std::ostream& stream, const Character character);
 
 protected:
     mtm::Team team;
@@ -27,7 +27,7 @@ protected:
     
     int attack_cost;
     int reload_addition;
-    bool in_game;
+    //bool in_game;
     char identifier;
     
     virtual bool validMove(mtm::GridPoint& src_coordinates, mtm::GridPoint& dst_coordinates) const = 0;

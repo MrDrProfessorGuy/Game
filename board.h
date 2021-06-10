@@ -8,12 +8,13 @@
 #include "Auxiliaries.h"
 
 class Board {
-public:
+
     int width;
     int length;
     
     std::map <mtm::GridPoint, std::shared_ptr<Character>> board;
-    
+
+public:
     
     Board(int width, int length);
     ~Board();
@@ -21,7 +22,8 @@ public:
     
     
     
-
+    void moveCharacter(mtm::GridPoint src_coordinates, mtm::GridPoint dst_coordinates);
+    friend std::ostream& operator<<(std::ostream& stream, const Character character);
 
 };
 
