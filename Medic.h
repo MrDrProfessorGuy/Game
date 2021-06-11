@@ -1,13 +1,26 @@
-//
-// Created by guy cohen on 08/06/2021.
-//
-
 #ifndef GAME_MEDIC_H
 #define GAME_MEDIC_H
 
+#include "Auxiliaries.h"
+#include "Character.h"
 
-class Medic {
-
+class Medic : public Character {
+public:
+    Medic(mtm::Team character_team, mtm::units_t health_units);
+    
+    
+    Character* clone() const;
+    
+    void reload();
+    void attack(mtm::GridPoint attack_coordinate) const;
+private:
+    
+    bool validMove(mtm::GridPoint& src_coordinates, mtm::GridPoint& dst_coordinates) const;
+    bool validAttack(mtm::GridPoint& src_coordinates, mtm::GridPoint& dst_coordinates) const;
+    
+    
+    
+    
 };
 
 

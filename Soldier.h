@@ -12,6 +12,7 @@ class Soldier : public Character{
             return true;
         }
         return false;
+        
     }
     
     bool validAttack(mtm::GridPoint& src_coordinates, mtm::GridPoint& dst_coordinates) const;
@@ -24,15 +25,22 @@ public:
         range = 3;
         
         attack_cost = 1;
-        
-    
+        reload_addition = 3;
+        if (team == mtm::POWERLIFTERS){
+            identifier = 'S';
+        }
+        else if (team == mtm::CROSSFITTERS){
+            identifier = 's';
+        }
     
     }
     ~Soldier();
-    Soldier& clone() const override;
+    Character* clone() const override;
     
     
-    void reload();
+    void reload(){
+        ammo += reload_addition;
+    }
     void attack(Character& opponent) const;
     
     
