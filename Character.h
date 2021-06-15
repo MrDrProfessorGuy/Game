@@ -1,56 +1,39 @@
 #ifndef GAME_CHARACTER_H
 #define GAME_CHARACTER_H
 
-#include <iostream>
-#include <vector>
-#include "Auxiliaries.h"
-#include "board.h"
+#include<cstdio>
+#include"Auxiliaries.h"
+#include<memory>
+#include<vector>
 
-
-
-class DamageBoard{
-public:
-
-
-};
-
-
-
-class Character {
-public:
+namespace mtm {
+    class Character {
+    protected:
+        Team team;
+        units_t health;
+        units_t ammo;
+        units_t range;
+        units_t power;
+        GridPoint location;
+        //add to implement same row and same col
+        virtual bool moveIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const = 0;
+        virtual bool attackIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const = 0;
     
-    virtual ~Character(){
+    public:
+        //maybe location shouldn't be here? so it won't create a mofa3 of Character?
+        Character(Team team, units_t health, units_t ammo, units_t range, units_t power, int row, int col);
+        Character(const Character& other) = default; // right, even for location?
+        Character& operator=(const Character& other) = default;//again make sure
+        virtual ~Character() = default;//make sure?
+        
+        virtual Character* clone() const = 0;
+        virtual bool move(const GridPoint& src_coordinates, const GridPoint& dst_coordinates);
+        virtual void reload() = 0;
+        virtual void attack(std::shared_ptr<Character> ptr_character) = 0;
+        //virtual AttackMatrix getAttackMatrix(const GridPoint& attack_coordinates)=0;
+    };
     
-    }
-    virtual Character* clone() const = 0;
-    
-    virtual void reload() = 0;
-    virtual void attack(mtm::GridPoint attack_coordinate) const = 0;
-    
-    friend std::ostream& operator<<(std::ostream& stream, const Character character) {
-    
-    }
-
-protected:
-    mtm::Team team;
-    mtm::units_t health;
-    mtm::units_t ammo;
-    mtm::units_t range;
-    mtm::units_t power;
-    
-    mtm::units_t attack_cost;
-    mtm::units_t reload_addition;
-    //bool in_game;
-    char identifier;
-    
-    virtual bool validMove(mtm::GridPoint& src_coordinates, mtm::GridPoint& dst_coordinates) const = 0;
-    virtual bool validAttack(mtm::GridPoint& src_coordinates, mtm::GridPoint& dst_coordinates) const = 0;
-    bool same_team(const Character character) const{
-    
-    }
-    
-};
-
+}
 
 
 #endif //GAME_CHARACTER_H
