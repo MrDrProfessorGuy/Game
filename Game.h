@@ -19,8 +19,8 @@ public:
     Game(const Game& other);
     Game& operator=(const Game& other);
     
-    void addCharacter(const mtm::GridPoint& coordinates, std::shared_ptr<Character> character);
-    static std::shared_ptr<Character> makeCharacter(mtm::CharacterType type, mtm::Team team,
+    void addCharacter(const mtm::GridPoint& coordinates, std::shared_ptr<mtm::Character> character);
+    static std::shared_ptr<mtm::Character> makeCharacter(mtm::CharacterType type, mtm::Team team,
                                                     mtm::units_t health, mtm::units_t ammo,
                                                     mtm::units_t range, mtm::units_t power);
     
@@ -31,7 +31,7 @@ public:
     std::ostream& printGameBoard(std::ostream& os, const char* begin,
                                  const char* end, unsigned int width) const;
     
-    
+    friend std::ostream& operator<<(std::ostream& stream, const Game game);
     
     
 };

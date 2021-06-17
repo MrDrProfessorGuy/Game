@@ -1,44 +1,37 @@
-#ifndef GAME_SNIPER_H
-#define GAME_SNIPER_H
+#include"Character.h"
 
-#include "Character.h"
-
-
-
-
-class Sniper : public Character {
-public:
-    Sniper(mtm::Team character_team, mtm::units_t health_units) {
-        team = character_team;
-        health = health_units;
-        ammo = 3;
-        range = 4;
+namespace mtm {
+    class Sniper : public Character {
+    private:
+        int count_attacks;
+        bool attackIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const override;
     
-        attack_cost = 1;
-        reload_addition = 2;
-        if (team == mtm::POWERLIFTERS) {
-            identifier = 'N';
-        }
-        else if (team == mtm::CROSSFITTERS) {
-            identifier = 'n';
+    public:
+        Sniper(Team team, units_t health, units_t ammo, units_t range,
+               units_t power, int row, int col, int count_attacks=0);
         
-        }
-    }
+        Sniper(const Sniper& other);
+        
+        Sniper& operator=(const Sniper& other);
+        
+        ~Sniper();
+        
+        Character* clone() const override;
+        
+        bool move(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) override;
+        
+        void reload(const GridPoint& coordinates) override;
+        
+        void attack(std::shared_ptr<Character> ptr_character_attacked, const GridPoint& src_coordinates, const GridPoint& dst_coordinates, bool check_range, bool* health_zero) override;
+        
+        friend std::ostream& operator<<(std::ostream& stream, const Sniper& sniper);
+        
+    };
     
     
-    Character* clone() const override;
+    std::ostream& operator<<(std::ostream& stream, const Sniper& sniper);
     
-    void reload() override;
-    void attack(mtm::GridPoint attack_coordinate) const override;
-private:
-    
-    bool validMove(mtm::GridPoint& src_coordinates, mtm::GridPoint& dst_coordinates) const;
-    bool validAttack(mtm::GridPoint& src_coordinates, mtm::GridPoint& dst_coordinates) const;
+}
 
 
 
-
-};
-
-
-#endif //GAME_SNIPER_H

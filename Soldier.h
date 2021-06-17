@@ -1,53 +1,31 @@
-#ifndef GAME_SOLDIER_H
-#define GAME_SOLDIER_H
+#include"Character.h"
 
-
-#include "Character.h"
-
-
-
-class Soldier : public Character{
-    bool validMove(mtm::GridPoint& src_coordinates, mtm::GridPoint& dst_coordinates) const{
-        if (mtm::GridPoint::distance(src_coordinates, dst_coordinates) <= range){
-            return true;
-        }
-        return false;
+namespace mtm {
+    class Soldier : public Character {
+    private:
+        bool attackIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const override;
+    
+    public:
+        Soldier(Team team, units_t health, units_t ammo, units_t range,
+                units_t power, int row, int col);
         
-    }
-    
-    bool validAttack(mtm::GridPoint& src_coordinates, mtm::GridPoint& dst_coordinates) const;
-
-public:
-    Soldier(mtm::Team character_team, mtm::units_t health_units){
-        team = character_team;
-        health = health_units;
-        ammo = 3;
-        range = 3;
+        Soldier(const Soldier& other);
         
-        attack_cost = 1;
-        reload_addition = 3;
-        if (team == mtm::POWERLIFTERS){
-            identifier = 'S';
-        }
-        else if (team == mtm::CROSSFITTERS){
-            identifier = 's';
-        }
-    
-    }
-    ~Soldier();
-    Character* clone() const override;
-    
-    
-    void reload(){
-        ammo += reload_addition;
-    }
-    void attack(Character& opponent) const;
+        Soldier& operator=(const Soldier& other);
+        
+        ~Soldier() = default;
+        
+        Character* clone() const  override;
+        
+        bool move(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) override;
+        
+        void reload(const GridPoint& coordinates) override;
+        
+        void attack(std::shared_ptr<Character> ptr_character_attacked, const GridPoint& src_coordinates, const GridPoint& dst_coordinates, bool check_range, bool* health_zero) override;
+        
+        friend std::ostream& operator<<(std::ostream& stream, const Soldier& soldier);
+        
+    };
     
     
-    
-    
-    
-};
-
-
-#endif //GAME_SOLDIER_H
+}

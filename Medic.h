@@ -1,27 +1,34 @@
-#ifndef GAME_MEDIC_H
-#define GAME_MEDIC_H
+#include"Character.h"
 
-#include "Auxiliaries.h"
-#include "Character.h"
+namespace mtm {
+    class Medic : public Character {
+    private:
+        bool attackIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const override;
+    
+    public:
+        Medic(Team team, units_t health, units_t ammo, units_t range,
+              units_t power, int row, int col);
+        
+        Medic(const Medic& other);
+        
+        Medic& operator=(const Medic& other);
+        
+        ~Medic() = default;
+        
+        Character* clone() const override;
+        
+        bool move(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) override;
+        
+        void reload(const GridPoint& coordinates) override;
+        
+        void attack(std::shared_ptr<Character> ptr_character_attacked, const GridPoint& src_coordinates, const GridPoint& dst_coordinates, bool check_range, bool* health_zero) override;
+        
+        friend std::ostream& operator<<(std::ostream& stream, const Medic& medic);
+        
+    };
+    
+    
+    std::ostream& operator<<(std::ostream& stream, const Medic& medic);
+    
+}
 
-class Medic : public Character {
-public:
-    Medic(mtm::Team character_team, mtm::units_t health_units);
-    
-    
-    Character* clone() const;
-    
-    void reload();
-    void attack(mtm::GridPoint attack_coordinate) const;
-private:
-    
-    bool validMove(mtm::GridPoint& src_coordinates, mtm::GridPoint& dst_coordinates) const;
-    bool validAttack(mtm::GridPoint& src_coordinates, mtm::GridPoint& dst_coordinates) const;
-    
-    
-    
-    
-};
-
-
-#endif //GAME_MEDIC_H

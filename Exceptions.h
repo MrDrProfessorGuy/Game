@@ -1,34 +1,34 @@
 #ifndef GAME_EXCEPTIONS_H
 #define GAME_EXCEPTIONS_H
 #include <exception>
+#include <string>
 
-
-
-
-namespace mtm{
+namespace mtm {
     
     class Exceptions : public std::exception {
     public:
         
-        Exceptions();
-        const char* what() const noexcept override;
-        
-        class IllegalArgument{};
-        class IllegalCell {};
-        class CellEmpty {};
-        class MoveTooFar {};
-        class CellOccupied {};
-        class OutOfRange {};
-        class OutOfAmmo {};
-        class IllegalTarget {};
+        class IllegalArgument {
+            const char* what() const noexcept{
+                return "";
+            }
+    
+        };
+
         
         
         
         
     };
- 
     
     
+    class IllegalCell : public Exceptions {};
+    class CellEmpty : public Exceptions {};
+    class MoveTooFar : public Exceptions {};
+    class CellOccupied : public Exceptions {};
+    class OutOfRange : public Exceptions {};
+    class OutOfAmmo : public Exceptions {};
+    class IllegalTarget : public Exceptions {};
     
     
     

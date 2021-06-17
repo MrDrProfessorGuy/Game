@@ -7,4 +7,9 @@ add_executable(Game
         gameTest.cpp
         Character.cpp Character.h
         Soldier.cpp Soldier.h
-        Auxiliaries.cpp Auxiliaries.h Game.cpp Game.h Sniper.cpp Sniper.h Medic.cpp Medic.h board.cpp board.h Exceptions.cpp Exceptions.h)
+        Auxiliaries.cpp Auxiliaries.h
+        Game.cpp Game.h
+        Sniper.cpp Sniper.h
+        Medic.cpp Medic.h
+        board.cpp board.h
+        Exceptions.cpp Exceptions.h)

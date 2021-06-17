@@ -15,25 +15,30 @@ namespace mtm {
         units_t range;
         units_t power;
         GridPoint location;
-        //add to implement same row and same col
-        virtual bool moveIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const = 0;
+        
+        virtual bool moveIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const;
         virtual bool attackIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const = 0;
+        virtual bool compareTeam(std::shared_ptr<Character> ptr_character);
     
     public:
-        //maybe location shouldn't be here? so it won't create a mofa3 of Character?
         Character(Team team, units_t health, units_t ammo, units_t range, units_t power, int row, int col);
-        Character(const Character& other) = default; // right, even for location?
-        Character& operator=(const Character& other) = default;//again make sure
-        virtual ~Character() = default;//make sure?
+        Character(const Character& other) = default;
+        Character& operator=(const Character& other) = default;
+        virtual ~Character() = default;
         
         virtual Character* clone() const = 0;
-        virtual bool move(const GridPoint& src_coordinates, const GridPoint& dst_coordinates);
-        virtual void reload() = 0;
-        virtual void attack(std::shared_ptr<Character> ptr_character) = 0;
-        //virtual AttackMatrix getAttackMatrix(const GridPoint& attack_coordinates)=0;
+        virtual bool move(const GridPoint& src_coordinates, const GridPoint& dst_coordinates);//make sure to implement just in character
+        virtual void reload(const GridPoint& coordinates) = 0;
+        virtual void attack(std::shared_ptr<Character> ptr_character_attacked, const GridPoint& src_coordinates,
+                            const GridPoint& dst_coordinates, bool check_range, bool* health_zero) = 0;
+        friend std::ostream& operator<<(std::ostream& stream, const Character& character);
+        bool decreaseHealth(units_t updated_health, std::shared_ptr<Character> ptr_character_attacked, bool* health_zero);
+        bool increaseHealth(units_t updated_health, std::shared_ptr<Character> ptr_character_attacked);
+        
     };
     
+    std::ostream& operator<<(std::ostream& stream, const Character& character);
+    
 }
-
 
 #endif //GAME_CHARACTER_H

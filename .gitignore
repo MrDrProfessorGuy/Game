@@ -48,3 +48,11 @@ cmake-build-debug/CMakeFiles/Progress/7
 cmake-build-debug/CMakeFiles/Progress/8
 cmake-build-debug/CMakeFiles/Progress/9
 cmake-build-debug/CMakeFiles/Progress/count.txt
+cmake-build-debug/CMakeFiles/Game.dir/board.cpp.o
+cmake-build-debug/CMakeFiles/Game.dir/Character.cpp.o
+cmake-build-debug/CMakeFiles/Game.dir/Game.cpp.o
+cmake-build-debug/CMakeFiles/Game.dir/gameTest.cpp.o
+cmake-build-debug/CMakeFiles/Game.dir/Medic.cpp.o
+cmake-build-debug/CMakeFiles/Game.dir/Sniper.cpp.o
+cmake-build-debug/CMakeFiles/Game.dir/Soldier.cpp.o
+cmake-build-debug/CMakeFiles/Progress/10
