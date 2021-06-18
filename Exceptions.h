@@ -8,32 +8,63 @@ namespace mtm {
     class Exceptions : public std::exception {
     public:
         
-        class IllegalArgument {
-            const char* what() const noexcept{
-                return "";
-            }
     
-        };
 
+    
+    };
+    
+    class IllegalArgument : public Exceptions {
+    public:
+        const char* what() const noexcept override{
+            return "A game related error has occurred: IllegalArgument";
+        }
         
-        
-        
-        
+    };
+    class IllegalCell : public Exceptions {
+    public:
+        const char* what() const noexcept override{
+            return "A game related error has occurred: IllegalCell";
+        }
+    };
+    class CellEmpty : public Exceptions {
+    public:
+        const char* what() const noexcept override{
+            return "A game related error has occurred: CellEmpty";
+        }
+    };
+    class MoveTooFar : public Exceptions {
+    public:
+        const char* what() const noexcept override{
+            return "A game related error has occurred: MoveTooFar";
+        }
+    };
+    class CellOccupied : public Exceptions {
+    public:
+        const char* what() const noexcept override{
+            return "A game related error has occurred: CellOccupied";
+        }
+    };
+    class OutOfRange : public Exceptions {
+    public:
+        const char* what() const noexcept override{
+            return "A game related error has occurred: OutOfRange";
+        }
+    };
+    class OutOfAmmo : public Exceptions {
+    public:
+        const char* what() const noexcept override{
+            return "A game related error has occurred: OutOfAmmo";
+        }
+    };
+    class IllegalTarget : public Exceptions {
+    public:
+        const char* what() const noexcept override{
+            return "A game related error has occurred: IllegalTarget";
+        }
     };
     
     
-    class IllegalCell : public Exceptions {};
-    class CellEmpty : public Exceptions {};
-    class MoveTooFar : public Exceptions {};
-    class CellOccupied : public Exceptions {};
-    class OutOfRange : public Exceptions {};
-    class OutOfAmmo : public Exceptions {};
-    class IllegalTarget : public Exceptions {};
-    
-    
-    
-    
-}
+}//namespace mtm
 
 
 

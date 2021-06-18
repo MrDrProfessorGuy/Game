@@ -6,11 +6,6 @@ using namespace mtm;
 Medic::Medic(Team team, units_t health, units_t ammo, units_t range,
              units_t power, int row, int col) : Character(team, health, ammo, 5, power, row, col) {}
 
-Medic::Medic(const Medic& other) : Character(other) {} //is this considered deafault?
-/*
-Medic& Medic:: operator=(const Medic& other) {
-    Character::operator=(other);//again is this considered default?
-}*/
 
 Character* Medic::clone() const {
     return new Medic(*this);
@@ -33,7 +28,6 @@ void Medic::attack(std::shared_ptr<Character> ptr_character_attacked, const Grid
     
     if (ptr_character_attacked != nullptr) {
         if (compareTeam(ptr_character_attacked)) {
-            //Medic* ptr_medic = static_cast<Medic*> (ptr_character_attacked);//if this works we can do the whole thing here
             increaseHealth(power, ptr_character_attacked);//increase health for who's in the targeted cell
             return;
         }
@@ -42,8 +36,8 @@ void Medic::attack(std::shared_ptr<Character> ptr_character_attacked, const Grid
             throw OutOfAmmo();
         }
         
-        ammo--;//ammo is decreased only once per attack
-        decreaseHealth(power, ptr_character_attacked, health_zero);//update the power value of the rival in the intial attacked cell
+        ammo--;
+        decreaseHealth(power, ptr_character_attacked, health_zero);//update the health value of the rival in the intial attacked cell
         return;
     }
     
@@ -56,6 +50,19 @@ void Medic::reload(const GridPoint& coordinates) {
     ammo += 5;
 }
 
-std::ostream& operator<<(std::ostream& stream, const Medic& medic) {
-    return stream;
+
+void Medic::print(std::ostream& os) const {
+    if (team == CROSSFITTERS) {
+        os << "m";//no new line because it should be continuos
+    }
+    if (team == POWERLIFTERS) {
+        os << "M";
+    }
 }
+
+std::ostream& operator<<(std::ostream& os, const Medic& medic) {
+    medic.print(os);
+    return os;
+    
+}
+

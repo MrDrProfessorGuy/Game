@@ -27,13 +27,16 @@ namespace mtm {
         virtual ~Character() = default;
         
         virtual Character* clone() const = 0;
-        virtual bool move(const GridPoint& src_coordinates, const GridPoint& dst_coordinates);//make sure to implement just in character
+        void move(const GridPoint& src_coordinates, const GridPoint& dst_coordinates);
         virtual void reload(const GridPoint& coordinates) = 0;
         virtual void attack(std::shared_ptr<Character> ptr_character_attacked, const GridPoint& src_coordinates,
                             const GridPoint& dst_coordinates, bool check_range, bool* health_zero) = 0;
-        friend std::ostream& operator<<(std::ostream& stream, const Character& character);
-        bool decreaseHealth(units_t updated_health, std::shared_ptr<Character> ptr_character_attacked, bool* health_zero);
+        void decreaseHealth(units_t updated_health, std::shared_ptr<Character> ptr_character_attacked, bool* health_zero);
         bool increaseHealth(units_t updated_health, std::shared_ptr<Character> ptr_character_attacked);
+        void addCrossOrPowerCount(int* count_cross_fitters, int* count_power_lifters);
+        virtual void print(std::ostream& stream) const =0;
+        // friend std::ostream& operator<<(std::ostream& stream, const Character& character);
+        
         
     };
     

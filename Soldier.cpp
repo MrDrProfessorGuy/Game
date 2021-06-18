@@ -8,20 +8,12 @@ using namespace mtm;
 Soldier::Soldier(Team team, units_t health, units_t ammo, units_t range,
                  units_t power, int row, int col) : Character(team, health, ammo, 3, power, row, col) {}
 
-Soldier::Soldier(const Soldier& other) : Character(other){} //is this considered default?
-//no because there's no Character()?
-/*
-Soldier& Soldier:: operator=(const Soldier& other) {
-    Character::operator=(other);//again is this considered default?
-}*/
-
-
 Character* Soldier::clone() const {
     return new Soldier(*this);
     
 }
 
-bool Soldier::attackIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const{
+bool Soldier::attackIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const {
     if ((src_coordinates.row != dst_coordinates.row) || (src_coordinates.col != dst_coordinates.col)) {
         return false;
     }
@@ -62,7 +54,7 @@ void Soldier::attack(std::shared_ptr<Character> ptr_character_attacked, const Gr
             return;
         }
         
-        decreaseHealth(ceil(power/2), ptr_character_attacked, health_zero);//update the power value of the rest of the rivals in range
+        decreaseHealth(ceil(power / 2), ptr_character_attacked, health_zero);//update the power value of the rest of the rivals in range
     }
     
 }
@@ -71,13 +63,19 @@ void Soldier::reload(const GridPoint& coordinates) {
     ammo += 3;
 }
 
-std::ostream& operator<<(std::ostream& stream, const Soldier& soldier) {
-    return stream;
+void Soldier::print(std::ostream& os) const {
+    if (team == CROSSFITTERS) {
+        os << "n";//no new line because it should be continuos
+    }
+    if (team == POWERLIFTERS) {
+        os << "N";
+    }
+}
+
+std::ostream& operator<<(std::ostream& os, const Soldier& soldier) {
+    soldier.print(os);
+    return os;
 }
 
 
-
-//std::vector<std::vector<int>> Soldier::getAttackMatrix(const GridPoint& attack_coordinates) {
-
-//}
 

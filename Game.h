@@ -3,47 +3,44 @@
 
 #include "Auxiliaries.h"
 #include "Character.h"
+#include "board.h"
 #include "Exceptions.h"
 #include <memory>
 
 
-
-
-class Game {
-
-
-
-public:
-    Game(int height, int width);
-    ~Game();
-    Game(const Game& other);
-    Game& operator=(const Game& other);
+namespace mtm {
+    class Game {
     
-    void addCharacter(const mtm::GridPoint& coordinates, std::shared_ptr<mtm::Character> character);
-    static std::shared_ptr<mtm::Character> makeCharacter(mtm::CharacterType type, mtm::Team team,
-                                                    mtm::units_t health, mtm::units_t ammo,
-                                                    mtm::units_t range, mtm::units_t power);
+    public:
+        Game(int height, int width);
+        ~Game() = default;
+        Game(const Game& other) = default;
+        Game& operator=(const Game& other) = default;
+        
+        void addCharacter(const GridPoint& coordinates, std::shared_ptr<Character> character);
+        static std::shared_ptr<Character> makeCharacter(CharacterType type, Team team,
+                                                        units_t health, units_t ammo,
+                                                        units_t range, units_t power);
+        
+        void move(const GridPoint& src_coordinates, const GridPoint& dst_coordinates);
+        void attack(const GridPoint& src_coordinates, const GridPoint& dst_coordinates);
+        void reload(const GridPoint& coordinates);
+        bool isOver(Team* winningTeam = NULL) const;
+        std::ostream& printGameBoard(std::ostream& os, const char* begin,
+                                     const char* end, unsigned int width);
+        
+        friend std::ostream& operator<<(std::ostream& stream, const Game game);
     
-    void move(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & dst_coordinates);
-    void attack(const mtm::GridPoint & src_coordinates, const mtm::GridPoint & dst_coordinates);
-    void reload(const mtm::GridPoint & coordinates);
-    bool isOver(mtm::Team* winningTeam=NULL) const;
-    std::ostream& printGameBoard(std::ostream& os, const char* begin,
-                                 const char* end, unsigned int width) const;
+    private:
+        int height;
+        int width;
+        Board board_game;
+    };
     
-    friend std::ostream& operator<<(std::ostream& stream, const Game game);
+    // std::ostream& operator<<(std::ostream& stream, const Game game);
     
     
-};
-
-
-
-
-
-
-
-
-
+}
 
 
 
