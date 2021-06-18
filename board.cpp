@@ -43,7 +43,7 @@ Board::Board(const Board& other){
     game_board = GameBoard(height, GameBoardCol(height, nullptr));
     
     for (int board_row = 0; board_row < height; board_row++) {
-        for (int board_col = 0; board_col < height; board_col++) {
+        for (int board_col = 0; board_col < width; board_col++) {
             Character* temp_ptr_character = other.game_board[board_row][board_col]->clone();
             game_board[board_row][board_col].reset(temp_ptr_character);
         }
@@ -57,22 +57,31 @@ Board& Board::operator=(const Board& other) {
     }
     width = other.width;
     height = other.height;
-    GameBoard board_copy(height, GameBoardCol(width, nullptr));
-    for (int board_row = 0; board_row < height; board_row++) {
-        for (int board_col = 0; board_col < height; board_col++) {
-            Character* temp_ptr_character = other.game_board[board_row][board_col]->clone();
-            game_board[board_row][board_col].reset(temp_ptr_character);
+    GameBoard game_board_copy(height, GameBoardCol(width, nullptr));
+    try{
+        for (int board_row = 0; board_row < height; board_row++) {
+            for (int board_col = 0; board_col < width; board_col++) {
+                Character* temp_ptr_character = other.game_board[board_row][board_col]->clone();
+                game_board_copy[board_row][board_col].reset(temp_ptr_character);
+            }
         }
     }
+    catch (std::bad_alloc&) {
+        for (int board_row = 0; board_row < height; board_row++) {
+            for (int board_col = 0; board_col < width; board_col++) {
+                game_board_copy[board_row][board_col].reset();
+            }
+        }
+        throw;
+    }
+    
+    clearGameBoard();
+    game_board = game_board_copy;
     return *this;
 }
 
 Board::~Board() {
-    for (int row_board = 0; row_board < height; row_board++) {
-        for (int col_board = 0; col_board < width; col_board++) {
-            game_board[row_board][col_board].reset();
-        }
-    }
+    clearGameBoard();
 }
 
 void Board::addCharacter(const GridPoint& coordinates, std::shared_ptr<Character> character) {
@@ -197,7 +206,6 @@ void Board::attack(const GridPoint& src_coordinates, const GridPoint& dst_coordi
     
 }//func
 
-
 void Board::reload(const GridPoint& coordinates) {
     if (!validCoordinate(coordinates)) {
         throw IllegalCell();
@@ -226,6 +234,15 @@ bool Board::isOver(Team* winningTeam) const {
     }
     
     return false;
+}
+
+void Board::clearGameBoard() {
+    
+    for (int board_row = 0; board_row < height; board_row++) {
+        for (int board_col = 0; board_col < width; board_col++) {
+            game_board[board_row][board_col].reset();
+        }
+    }
 }
 
 

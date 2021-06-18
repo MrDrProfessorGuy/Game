@@ -42,7 +42,7 @@ namespace mtm {
         
         bool validCoordinate(const GridPoint& grid_point);
         bool cellIsEmpty(const GridPoint& grid_point);
-        
+        void clearGameBoard();
     };
     
     //std::ostream& operator<<(std::ostream& stream, const Board board);

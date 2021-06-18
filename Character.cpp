@@ -20,9 +20,10 @@ void Character::move(const GridPoint& src_coordinates, const GridPoint& dst_coor
     if (!valid_move) {
         throw MoveTooFar();
     }
-    if (this != nullptr) {
-        throw CellOccupied();
-    }
+    /// Commented since cant be Null
+    ///if (this != nullptr) {
+    ///    throw CellOccupied();
+    ///}
     location = GridPoint(dst_coordinates);//needs the copy? or just location=dst_coordinates
 }
 
@@ -41,6 +42,7 @@ void Character::decreaseHealth(units_t power, std::shared_ptr<Character> ptr_cha
 
 bool Character::increaseHealth(units_t power, std::shared_ptr<Character> ptr_character_attacked) {
     ptr_character_attacked->health += power;
+    /// Need to return something
 }
 
 void Character::addCrossOrPowerCount(int* count_cross_fitters, int* count_power_lifters) {
