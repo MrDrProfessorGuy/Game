@@ -1,10 +1,12 @@
 #include "Medic.h"
-#include<cassert>
 #include"Exceptions.h"
 using namespace mtm;
 
-Medic::Medic(Team team, units_t health, units_t ammo, units_t range,
-             units_t power, int row, int col) : Character(team, health, ammo, 5, power, row, col) {}
+Medic::Medic(Team team, units_t health, units_t ammo, units_t attack_range,
+             units_t power, int row, int col) : Character(team, health, ammo, attack_range
+                                                          , power, row, col) {
+    move_range = 5;
+}
 
 
 Character* Medic::clone() const {
@@ -12,37 +14,36 @@ Character* Medic::clone() const {
     
 }
 
-bool Character::attackIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const {
-    if (!moveIsValid(src_coordinates, dst_coordinates)) {
+bool Medic::attackIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const {
+    if (GridPoint::distance(src_coordinates, dst_coordinates) > attack_range) {
         return false;
     }
-    
     return true;
 }
 
-void Medic::attack(std::shared_ptr<Character> ptr_character_attacked, const GridPoint& src_coordinates, const GridPoint& dst_coordinates, bool check_range, bool* health_zero) {
+void Medic::attack(std::shared_ptr<Character> ptr_character_attacked, const GridPoint& src_coordinates,
+                   const GridPoint& dst_coordinates, bool check_range, bool* health_zero) {
     
     if (!attackIsValid(src_coordinates, dst_coordinates)) {
         throw OutOfRange();
     }
-    
-    if (ptr_character_attacked != nullptr) {
+    if (ammo < 1) {
+        throw OutOfAmmo();
+    }
+    if (ptr_character_attacked == nullptr || GridPoint::distance(src_coordinates,dst_coordinates) == 0) {
+        throw IllegalTarget();
+    }
+    else {
         if (compareTeam(ptr_character_attacked)) {
             increaseHealth(power, ptr_character_attacked);//increase health for who's in the targeted cell
             return;
         }
-        
-        if (ammo < 1) {
-            throw OutOfAmmo();
+        else {
+            ammo--;
+            decreaseHealth(power, ptr_character_attacked, health_zero);
+            return;
         }
-        
-        ammo--;
-        decreaseHealth(power, ptr_character_attacked, health_zero);//update the health value of the rival in the intial attacked cell
-        return;
     }
-    
-    assert(ptr_character_attacked == nullptr);
-    throw IllegalTarget();
     
 }
 

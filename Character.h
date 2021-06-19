@@ -9,10 +9,13 @@
 namespace mtm {
     class Character {
     protected:
+
+    
         Team team;
         units_t health;
         units_t ammo;
-        units_t range;
+        units_t move_range;
+        units_t attack_range;
         units_t power;
         GridPoint location;
         
@@ -21,19 +24,22 @@ namespace mtm {
         virtual bool compareTeam(std::shared_ptr<Character> ptr_character);
     
     public:
-        Character(Team team, units_t health, units_t ammo, units_t range, units_t power, int row, int col);
+        Character(Team team, units_t health, units_t ammo, units_t attack_range
+                  , units_t power, int row, int col);
         Character(const Character& other) = default;
         Character& operator=(const Character& other) = default;
         virtual ~Character() = default;
         
         virtual Character* clone() const = 0;
         void move(const GridPoint& src_coordinates, const GridPoint& dst_coordinates);
+        void set_location(const GridPoint& coordinates);
         virtual void reload(const GridPoint& coordinates) = 0;
         virtual void attack(std::shared_ptr<Character> ptr_character_attacked, const GridPoint& src_coordinates,
                             const GridPoint& dst_coordinates, bool check_range, bool* health_zero) = 0;
         void decreaseHealth(units_t updated_health, std::shared_ptr<Character> ptr_character_attacked, bool* health_zero);
-        bool increaseHealth(units_t updated_health, std::shared_ptr<Character> ptr_character_attacked);
+        void increaseHealth(units_t updated_health, std::shared_ptr<Character> ptr_character_attacked);
         void addCrossOrPowerCount(int* count_cross_fitters, int* count_power_lifters);
+        Team getTeam();
         virtual void print(std::ostream& stream) const =0;
         // friend std::ostream& operator<<(std::ostream& stream, const Character& character);
         

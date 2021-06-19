@@ -6,8 +6,8 @@ namespace mtm {
         bool attackIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const override;
     
     public:
-        Medic(Team team, units_t health, units_t ammo, units_t range,
-              units_t power, int row, int col);
+        Medic(Team team, units_t health, units_t ammo, units_t attack_range
+                ,units_t power, int row, int col);
         
         Medic(const Medic& other) = default;
         

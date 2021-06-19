@@ -1,12 +1,14 @@
 #include"Exceptions.h"
 #include"Sniper.h"
-#include<assert.h>
 
 
 using namespace mtm;
 
-Sniper::Sniper(Team team, units_t health, units_t ammo, units_t range,
-               units_t power, int row, int col, int count_attacks) : Character(team, health, ammo, 4, power, row, col), count_attacks(0) {}
+Sniper::Sniper(Team team, units_t health, units_t ammo, units_t attack_range,
+               units_t power, int row, int col, int count_attacks) :
+               Character(team, health, ammo, attack_range, power, row, col), count_attacks(0) {
+    move_range = 4;
+}
 
 
 Character* Sniper::clone() const {
@@ -16,7 +18,7 @@ Character* Sniper::clone() const {
 
 bool Sniper::attackIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const {
     double distance = GridPoint::distance(src_coordinates, dst_coordinates);
-    if ((distance <= range) && (distance >= ceil(range / 2))) {
+    if ((distance <= attack_range) && (distance >= ceil(attack_range / 2))) {
         return true;
     }
     return false;
@@ -28,12 +30,11 @@ void Sniper::attack(std::shared_ptr<Character> ptr_character_attacked, const Gri
     }
     
     if (ptr_character_attacked != nullptr) {
-        if (compareTeam(ptr_character_attacked)) {
-            return;//should throw IlligalArgument here? it same team
-        }
-        
         if (ammo < 1) {
             throw OutOfAmmo();
+        }
+        if (compareTeam(ptr_character_attacked)) {
+            throw IllegalTarget();
         }
         count_attacks++;
         ammo--;
@@ -44,8 +45,6 @@ void Sniper::attack(std::shared_ptr<Character> ptr_character_attacked, const Gri
         decreaseHealth(power, ptr_character_attacked, health_zero);//update the health value
         return;
     }
-    
-    assert(ptr_character_attacked == nullptr);
     throw IllegalTarget();
     
 }
@@ -56,10 +55,10 @@ void Sniper::reload(const GridPoint& coordinates) {
 
 void Sniper::print(std::ostream& os) const {
     if (team == CROSSFITTERS) {
-        os << "s";//no new line because it should be continuos
+        os << "n";//no new line because it should be continuos
     }
     if (team == POWERLIFTERS) {
-        os << "S";
+        os << "N";
     }
 }
 

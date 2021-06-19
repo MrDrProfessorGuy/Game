@@ -2,10 +2,10 @@
 #define GAME_GAME_H
 
 #include "Auxiliaries.h"
-#include "Character.h"
 #include "board.h"
 #include "Exceptions.h"
 #include <memory>
+
 
 
 namespace mtm {
@@ -37,11 +37,10 @@ namespace mtm {
         Board board_game;
     };
     
-    // std::ostream& operator<<(std::ostream& stream, const Game game);
+    std::ostream& operator<<(std::ostream& stream, const Game game);
     
     
 }
-
 
 
 

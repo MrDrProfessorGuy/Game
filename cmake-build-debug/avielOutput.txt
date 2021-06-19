@@ -1,0 +1,129 @@
+-----ErrorChecks-----
+A game related error has occurred: IllegalArgument
+A game related error has occurred: IllegalArgument
+*********************
+| | | | | | | | | | |
+|N|S| | | | | | |s|n|
+|M|S| | | | | | |s|m|
+|N|S| | | | | | |s|n|
+| | | | | | | | | | |
+*********************
+-----CellOccupied-----
+A game related error has occurred: CellOccupied
+A game related error has occurred: CellOccupied
+A game related error has occurred: CellOccupied
+A game related error has occurred: CellOccupied
+A game related error has occurred: CellOccupied
+-----IllegalCell-----
+A game related error has occurred: IllegalCell
+-----CellEmpty-----
+A game related error has occurred: CellEmpty
+-----MoveTooFar-----
+A game related error has occurred: MoveTooFar
+A game related error has occurred: MoveTooFar
+A game related error has occurred: MoveTooFar
+-----OutOfRange-----
+A game related error has occurred: OutOfRange
+A game related error has occurred: OutOfRange
+A game related error has occurred: OutOfRange
+A game related error has occurred: OutOfRange
+A game related error has occurred: OutOfRange
+-----IllegalTarget-----
+A game related error has occurred: IllegalTarget
+A game related error has occurred: IllegalTarget
+A game related error has occurred: IllegalTarget
+A game related error has occurred: IllegalTarget
+A game related error has occurred: IllegalTarget
+-----SniperMaxShot-----
+-----SoldierMovement-----
+-----SniperShot-----
+-----SoldierShot-----
+-----MedicHeal-----
+-----SoldierShot-----
+A game related error has occurred: OutOfAmmo
+A game related error has occurred: OutOfAmmo
+-----SniperReload-----
+*********************
+| | | | | | | | | | |
+|N|S| | | | | | |s|n|
+|M|S| | | |s| | | |m|
+| |S| | | | | | |s|n|
+| | | | | | | | | | |
+*********************
+-----MedicMove-----
+-----SniperHeadShot-----
+-----CreatingCopyGame-----
+-----FirstGame-----
+-----SoldierMove-----
+-----SoldierShot-----
+-----SoldierShot-----
+-----SniperShot-----
+*********************
+| | | | | | | | | | |
+|N|S| | | | | | | |n|
+|M|S| | | | | | | | |
+| |S| | | | | | | |n|
+| | | | | | | | | | |
+*********************
+A game related error has occurred: OutOfAmmo
+A game related error has occurred: OutOfAmmo
+-----MedicMove-----
+-----MedicShot-----
+A game related error has occurred: OutOfAmmo
+-----MedicReload-----
+-----MedicShot-----
+*********************
+| | | | | | | | | | |
+|N|S| | | | | | | | |
+| |S| | | |M| | | | |
+| |S| | | | | | | | |
+| | | | | | | | | | |
+*********************
+Winner team is: POWERLIFTERS
+-----SecondGame-----
+*********************
+| | | | | | | | | | |
+|N|S| | | | | | |s|n|
+|M|S| | | |s| | | | |
+| |S| | | | | | |s|n|
+| | | | | | | | | | |
+*********************
+-----SoldierMove-----
+-----SniperShot-----
+*********************
+| | | | | | | | | | |
+|N|S| | | | | | | |n|
+|M|S| | | |s| | | | |
+| |S| | | | |s| | |n|
+| | | | | | | | | | |
+*********************
+-----SoldierReload-----
+-----SoldierShot-----
+-----SoldierShot-----
+-----SoldierShot-----
+*********************
+| | | | | | | | | | |
+| |S| | | | | | | |n|
+| |S| | | |s| | | | |
+| |S| | | | |s| | |n|
+| | | | | | | | | | |
+*********************
+-----SniperShot-----
+-----SniperShot-----
+*********************
+| | | | | | | | | | |
+| | | | | | | | | |n|
+| |S| | | |s| | | | |
+| | | | | | |s| | |n|
+| | | | | | | | | | |
+*********************
+-----SniperMove-----
+-----SniperShot-----
+*********************
+| | | | | | | | | | |
+| | | | | | | | |n| |
+| | | | | |s| | | | |
+| | | | | | |s| | |n|
+| | | | | | | | | | |
+*********************
+Winner team is: CROSSFITTERS
