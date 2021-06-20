@@ -12,7 +12,6 @@ Medic::Medic(Team team, units_t health, units_t ammo, units_t attack_range,
 
 Character* Medic::clone() const {
     return new Medic(*this);
-    
 }
 
 bool Medic::attackInRange(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const {
@@ -73,6 +72,5 @@ void Medic::print(std::ostream& os) const {
 std::ostream& operator<<(std::ostream& os, const Medic& medic) {
     medic.print(os);
     return os;
-    
 }
 

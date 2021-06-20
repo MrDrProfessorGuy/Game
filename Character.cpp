@@ -19,7 +19,6 @@ void Character::move(const GridPoint& src_coordinates, const GridPoint& dst_coor
     if (!valid_move) {
         throw MoveTooFar();
     }
-
     set_location(dst_coordinates);//needs the copy? or just location=dst_coordinates
 }
 
@@ -46,16 +45,6 @@ void Character::decreaseHealth(units_t amount, bool* is_dead) {
 void Character::increaseHealth(units_t amount) {
     bool tmp_bool = false;
     decreaseHealth(-amount, &tmp_bool);
-}
-
-void Character::addCrossOrPowerCount(int* count_cross_fitters, int* count_power_lifters) {
-    if (team == CROSSFITTERS) {
-        *(count_cross_fitters) += 1;
-    }
-    
-    if (team == POWERLIFTERS) {
-        *(count_power_lifters) += 1;
-    }
 }
 
 Team Character::getTeam(){

@@ -9,8 +9,6 @@
 namespace mtm {
     class Character {
     protected:
-
-    
         Team team;
         units_t health;
         units_t ammo;
@@ -40,12 +38,8 @@ namespace mtm {
                             const GridPoint& dst_coordinates, bool check_range, bool* killed_opponent) = 0;
         void decreaseHealth(units_t amount, bool *is_dead);
         void increaseHealth(units_t amount);
-        void addCrossOrPowerCount(int* count_cross_fitters, int* count_power_lifters);
         Team getTeam();
-        virtual void print(std::ostream& stream) const =0;
-        // friend std::ostream& operator<<(std::ostream& stream, const Character& character);
-        
-        
+        virtual void print(std::ostream& stream) const = 0;
     };
     
     std::ostream& operator<<(std::ostream& stream, const Character& character);

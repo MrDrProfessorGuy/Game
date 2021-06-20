@@ -13,7 +13,6 @@ Soldier::Soldier(Team team, units_t health, units_t ammo, units_t attack_range,
 
 Character* Soldier::clone() const {
     return new Soldier(*this);
-    
 }
 
 bool Soldier::attackInRange(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const {
@@ -34,7 +33,6 @@ bool Soldier::validTarget(const GridPoint& src_coordinates, const GridPoint& dst
 
 void Soldier::attack(std::shared_ptr<Character> opponent, const GridPoint& src_coordinates,
                      const GridPoint& dst_coordinates, bool check_range, bool* killed_opponent) {
-    
     //if it's the first check then it checks if dest out of Soldier attack range
     if (check_range) {
         if (!attackInRange(src_coordinates, dst_coordinates)) {
@@ -54,12 +52,10 @@ void Soldier::attack(std::shared_ptr<Character> opponent, const GridPoint& src_c
         opponent->decreaseHealth(power, killed_opponent);//update the power value of the rival in the intial attacked cell
         return;
     }
-    
     else if (GridPoint::distance(src_coordinates, dst_coordinates) <= ceil(double(attack_range) / 3)) {
         if (isTeamMate(opponent)) {
             return;
         }
-    
         opponent->decreaseHealth(ceil(double(power) / 2), killed_opponent);//update the power value of the rest of the rivals in range
     }
     

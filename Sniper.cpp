@@ -14,7 +14,6 @@ Sniper::Sniper(Team team, units_t health, units_t ammo, units_t attack_range,
 
 Character* Sniper::clone() const {
     return new Sniper(*this);
-    
 }
 
 bool Sniper::attackInRange(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const {
@@ -64,7 +63,7 @@ void Sniper::reload(const GridPoint& coordinates) {
 
 void Sniper::print(std::ostream& os) const {
     if (team == CROSSFITTERS) {
-        os << "n";//no new line because it should be continuos
+        os << "n";
     }
     if (team == POWERLIFTERS) {
         os << "N";
@@ -74,5 +73,4 @@ void Sniper::print(std::ostream& os) const {
 std::ostream& operator<<(std::ostream& os, const Sniper& sniper) {
     sniper.print(os);
     return os;
-    
 }

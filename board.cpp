@@ -13,7 +13,6 @@ bool Board::validCoordinate(const GridPoint& grid_point) {
     if (grid_point.row < 0 || grid_point.col < 0 || grid_point.row >= height || grid_point.col >= width) {
         return false;
     }
-    
     return true;
 }
 
@@ -29,7 +28,6 @@ Board::Board(int width, int height) : width(width), height(height),team_characte
     if (height <= 0 || width <= 0) {
         throw IllegalArgument();
     }
-    
 }
 
 Board::Board(const Board& other){
@@ -53,8 +51,6 @@ Board::Board(const Board& other){
         clearGameBoard();
         throw;
     }
-    
-    
 }
 
 Board& Board::operator=(const Board& other) {

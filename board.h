@@ -17,7 +17,7 @@ namespace mtm {
         Board(int width, int height);
         Board(const Board& other);
         Board& operator=(const Board& other);
-        ~Board();//likeremove
+        ~Board();
         
         void addCharacter(const GridPoint& coordinates, std::shared_ptr<Character> character);
         static std::shared_ptr<Character> makeCharacter(CharacterType type, Team team,
@@ -36,8 +36,7 @@ namespace mtm {
         typedef std::vector< std::shared_ptr<Character>> GameBoardCol;
         int width;
         int height;
-        //int count_cross_fitters;
-        //int count_power_lifters;
+
         int team_character_count[2];
         GameBoard game_board;
         
