@@ -206,15 +206,13 @@ void Test1(){
     g1.move(GridPoint(2,0), GridPoint(2,5));
     cout << "-----MedicShot-----" << endl;
     g1.attack(GridPoint(2,5),GridPoint(1,9));
+    cout << "-----MedicShot-----" << endl;
+    g1.attack(GridPoint(2,5),GridPoint(3,9));
     try{
         g1.attack(GridPoint(2,5), GridPoint(3,9));
     } catch (OutOfAmmo& e){
         cout << e.what() << endl;
     }
-    cout << "-----MedicReload-----" << endl;
-    g1.reload(GridPoint(2,5));
-    cout << "-----MedicShot-----" << endl;
-    g1.attack(GridPoint(2,5),GridPoint(3,9));
     cout << g1 << endl;
     assert(g1.isOver(team) == true);
     assert(*team == POWERLIFTERS);

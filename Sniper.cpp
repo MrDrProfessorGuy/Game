@@ -1,13 +1,14 @@
 #include"Exceptions.h"
 #include"Sniper.h"
 
-
 using namespace mtm;
+#define SNIPER_MOVE_RANGE 4
+#define SNIPER_POWER_ATTACK 3
 
 Sniper::Sniper(Team team, units_t health, units_t ammo, units_t attack_range,
-               units_t power, int row, int col, int count_attacks) :
+               units_t power, int row, int col) :
                Character(team, health, ammo, attack_range, power, row, col), count_attacks(0) {
-    move_range = 4;
+    move_range = SNIPER_MOVE_RANGE;
 }
 
 
@@ -16,36 +17,44 @@ Character* Sniper::clone() const {
     
 }
 
-bool Sniper::attackIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const {
+bool Sniper::attackInRange(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const {
     double distance = GridPoint::distance(src_coordinates, dst_coordinates);
-    if ((distance <= attack_range) && (distance >= ceil(attack_range / 2))) {
+    if ((distance <= attack_range) && (distance >= ceil(double(attack_range) / 2))) {
         return true;
     }
     return false;
 }
 
-void Sniper::attack(std::shared_ptr<Character> ptr_character_attacked, const GridPoint& src_coordinates, const GridPoint& dst_coordinates, bool check_range, bool* health_zero) {
-    if (!attackIsValid(src_coordinates, dst_coordinates)) {
+bool Sniper::validTarget(const GridPoint& src_coordinates, const GridPoint& dst_coordinates
+        ,const std::shared_ptr<Character>& opponent) const {
+    
+    if (opponent == nullptr || isTeamMate(opponent)){
+        return false;
+    }
+    return true;
+}
+
+void Sniper::attack(std::shared_ptr<Character> opponent, const GridPoint& src_coordinates
+                    , const GridPoint& dst_coordinates, bool check_range, bool* killed_opponent) {
+    if (!attackInRange(src_coordinates, dst_coordinates)) {
         throw OutOfRange();
     }
-    
-    if (ptr_character_attacked != nullptr) {
-        if (ammo < 1) {
-            throw OutOfAmmo();
-        }
-        if (compareTeam(ptr_character_attacked)) {
-            throw IllegalTarget();
-        }
-        count_attacks++;
-        ammo--;
-        if (count_attacks == 3) {
-            decreaseHealth(2 * power, ptr_character_attacked, health_zero);//update the health value
-            count_attacks = 0;
-        }
-        decreaseHealth(power, ptr_character_attacked, health_zero);//update the health value
-        return;
+    if (ammo < 1) {
+        throw OutOfAmmo();
     }
-    throw IllegalTarget();
+    if (!validTarget(src_coordinates, dst_coordinates, opponent)) {
+        throw IllegalTarget();
+    }
+    
+    count_attacks++;
+    ammo--;
+    if (count_attacks == SNIPER_POWER_ATTACK) {
+        opponent->decreaseHealth(2 * power, killed_opponent);//update the health value
+        count_attacks = 0;
+    }
+    else{
+        opponent->decreaseHealth(power, killed_opponent);//update the health value
+    }
     
 }
 

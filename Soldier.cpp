@@ -16,49 +16,51 @@ Character* Soldier::clone() const {
     
 }
 
-bool Soldier::attackIsValid(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const {
-    if ((src_coordinates.row != dst_coordinates.row) && (src_coordinates.col != dst_coordinates.col)) {
-        return false;
-    }
+bool Soldier::attackInRange(const GridPoint& src_coordinates, const GridPoint& dst_coordinates) const {
     if (GridPoint::distance(src_coordinates, dst_coordinates) > attack_range) {
         return false;
     }
-    
     return true;
 }
 
-void Soldier::attack(std::shared_ptr<Character> ptr_character_attacked, const GridPoint& src_coordinates,
-                     const GridPoint& dst_coordinates, bool check_range, bool* health_zero) {
+bool Soldier::validTarget(const GridPoint& src_coordinates, const GridPoint& dst_coordinates
+        ,const std::shared_ptr<Character>& opponent) const{
+    
+    if ((src_coordinates.row != dst_coordinates.row) && (src_coordinates.col != dst_coordinates.col)) {
+        return false;
+    }
+    return true;
+}
+
+void Soldier::attack(std::shared_ptr<Character> opponent, const GridPoint& src_coordinates,
+                     const GridPoint& dst_coordinates, bool check_range, bool* killed_opponent) {
     
     //if it's the first check then it checks if dest out of Soldier attack range
     if (check_range) {
-        
-        if (!attackIsValid(src_coordinates, dst_coordinates)) {
+        if (!attackInRange(src_coordinates, dst_coordinates)) {
             throw OutOfRange();
         }
-    
         if (ammo < 1) {
             throw OutOfAmmo();
         }
-        ammo--;//ammo is decreased only once per attack
-        if (ptr_character_attacked == nullptr) {
-            return;//does nothing if none is on the cell
+        if (!validTarget(src_coordinates, dst_coordinates, opponent)){
+            throw IllegalTarget();
         }
-        
-        if (compareTeam(ptr_character_attacked)) {
+        ammo--;//ammo is decreased only once per attack
+        if (opponent == nullptr || isTeamMate(opponent)) {
             return;
         }
 
-        decreaseHealth(power, ptr_character_attacked, health_zero);//update the power value of the rival in the intial attacked cell
+        opponent->decreaseHealth(power, killed_opponent);//update the power value of the rival in the intial attacked cell
         return;
     }
     
     else if (GridPoint::distance(src_coordinates, dst_coordinates) <= ceil(double(attack_range) / 3)) {
-        if (compareTeam(ptr_character_attacked)) {
+        if (isTeamMate(opponent)) {
             return;
         }
-        
-        decreaseHealth(ceil(double(power) / 2), ptr_character_attacked, health_zero);//update the power value of the rest of the rivals in range
+    
+        opponent->decreaseHealth(ceil(double(power) / 2), killed_opponent);//update the power value of the rest of the rivals in range
     }
     
 }

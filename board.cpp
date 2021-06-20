@@ -111,17 +111,17 @@ void Board::addCharacter(const GridPoint& coordinates, std::shared_ptr<Character
 
 std::shared_ptr<Character> Board:: makeCharacter(CharacterType type, Team team,
                                                  units_t health, units_t ammo, units_t range, units_t power) {
-    if (health <= 0 || ammo < 0 || power < 0) {
+    if (health <= 0 || ammo < 0 || power < 0 || range < 0) {
         throw IllegalArgument();
     }
     std::shared_ptr<Character> shared_ptr;
     if (type == SOLDIER) {
         shared_ptr = std::make_shared<Soldier>(team, health, ammo, range, power, invalid_location, invalid_location);
     }
-    if (type == MEDIC) {
+    else if (type == MEDIC) {
         shared_ptr = std::make_shared<Medic>(team, health, ammo, range, power, invalid_location, invalid_location);
     }
-    if (type == SNIPER) {
+    else if (type == SNIPER) {
         shared_ptr = std::make_shared<Sniper>(team, health, ammo, range, power, invalid_location, invalid_location);
     }
     

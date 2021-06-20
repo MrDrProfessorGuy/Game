@@ -69,9 +69,8 @@ A game related error has occurred: OutOfAmmo
 A game related error has occurred: OutOfAmmo
 -----MedicMove-----
 -----MedicShot-----
-A game related error has occurred: OutOfAmmo
------MedicReload-----
 -----MedicShot-----
+A game related error has occurred: OutOfAmmo
 *********************
 | | | | | | | | | | |
 |N|S| | | | | | | | |
